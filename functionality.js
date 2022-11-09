@@ -1,6 +1,6 @@
 let notas = [
     {
-        titulo: "Lista de la compra ",
+        titulo: "Lista de la compra",
         items: "Pan, Leche, Huevos, Queso, etc"
     }
 ];
@@ -18,14 +18,14 @@ function MasInfo(idNota){
 }
 
 
-function addNotaToDOM(nota,i){
+function añadirNotaDOM(nota,i){
     let div = document.createElement("div");
     content.appendChild(div);
 
     let TituloDOM = document.createElement("p");
     div.appendChild(TituloDOM);
 
-    TituloDOM.textContent = nota.titulo;
+    TituloDOM.textContent = nota.titulo + ' ';
 
     let button = document.createElement("button");
     TituloDOM.appendChild(button);
@@ -37,21 +37,26 @@ function addNotaToDOM(nota,i){
 
     ItemsDOM.style.display = "none";
     ItemsDOM.id = i;
-    ItemsDOM.textContent = nota.items;
+    ItemsDOM.textContent = nota.items + ' ';
+
+    let button2 = document.createElement("button");
+    ItemsDOM.appendChild(button2);
+    button2.textContent = "ELIMINAR";
+    button2.onclick = function(){div.remove()};
 
 }
 
-function addNota(nuevaNota){
+function añadirNota(nuevaNota){
 
     notas.push(nuevaNota);
 
-    addNotaToDOM(nuevaNota,notas.length-1);
+    añadirNotaDOM(nuevaNota,notas.length-1);
 }
 
 function nuevaNota(){
 
     let tituloInput = document.getElementById("titulo");
-    let titulo = tituloInput.value + " ";
+    let titulo = tituloInput.value;
     
 
     let itemsInput = document.getElementById("items");
@@ -60,7 +65,7 @@ function nuevaNota(){
 
     let nota = {titulo: titulo, items: items};
 
-    addNota(nota);
+    añadirNota(nota);
 
 }
 
@@ -72,5 +77,5 @@ for (let i = 0; i < notas.length; i++) {
 
     let nota = notas[i];
 
-    addNotaToDOM(nota, i);
+    añadirNotaDOM(nota, i);
 }
