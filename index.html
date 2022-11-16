@@ -3,22 +3,27 @@
     
   <head>
     <link type="text/css" rel="stylesheet" href="style.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     
   </head>
-
   <body>
-    <h1>GESTOR DE NOTAS</h1>
+    <div id="gestor">
+      <h2>GESTOR DE NOTAS</h2>
 
-    <div>
-        <p>Título: <input id="titulo" type="text"></p>
-        <p>Items: <input id="items" type="text"></p>
-        <button onclick="nuevaNota()">+</button>
+      <div>
+          <p>Título: <input id="titulo" type="text"></p>
+          <p>Items: <input id="items" type="text"></p>
+          <button onclick="nuevaNota()">+</button>
+      </div>
+      <hr>
+      <div id="content"></div>
     </div>
-    <hr>
-    <div id="content"></div>
 
+    <div id="gestor2"></div>
+    
     <script src="functionality.js"></script>
     
   </body>
+   
 
 </html>
