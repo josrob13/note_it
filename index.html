@@ -4,22 +4,27 @@
   <head>
     <link type="text/css" rel="stylesheet" href="style.css"/>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    
   </head>
+
   <body>
     <div id="gestor">
       <h2>GESTOR DE NOTAS</h2>
 
-      <div>
-          <p>Título: <input id="titulo" type="text"></p>
-          <p>Items: <input id="items" type="text"></p>
-          <button onclick="nuevaNota()">+</button>
-      </div>
+      <label for="titulo">Titulo:</label>
+      <input id="titulo" type="text">
+      <br>
+      <label for="items">Items:</label>
+      <input id="items" type="text">
+      <br>
+      <button onclick="nuevaNota()">Nuevo Elemento</button>
+
       <hr>
+      <br>
       <div id="content"></div>
     </div>
 
     <div id="gestor2"></div>
+    
     
     <script src="functionality.js"></script>
     
@@ -27,3 +32,4 @@
    
 
 </html>
+
