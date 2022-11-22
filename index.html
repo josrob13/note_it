@@ -4,6 +4,7 @@
   <head>
     <link type="text/css" rel="stylesheet" href="style.css"/>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    
   </head>
 
   <body>
@@ -11,15 +12,17 @@
       <h2>GESTOR DE NOTAS</h2>
 
       <label for="titulo">Titulo:</label>
+      <br>
       <input id="titulo" type="text">
       <br>
       <label for="items">Items:</label>
-      <input id="items" type="text">
+      <br>
+      <textarea id="items" type="text" rows="6"></textarea>
       <br>
       <button onclick="nuevaNota()">Nuevo Elemento</button>
 
       <hr>
-      <br>
+      
       <div id="content"></div>
     </div>
 
@@ -29,7 +32,7 @@
     <script src="functionality.js"></script>
     
   </body>
-   
+  
 
 </html>
 

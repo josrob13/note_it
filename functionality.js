@@ -2,14 +2,16 @@ let notas = [
     {
         titulo: "Lista de la compra",
         items: "Pan, Leche, Huevos, Queso, etc"
+    },
+    {
+        titulo: "Lista de tareas",
+        items: "Limpiar, Barrer, Fregar, etc"
     }
 ];
 
 let gestor= $("#gestor");
 let content = $("#content");
 let gestor2= $("#gestor2");
-
-
 
 
 function MostrarOcultarMasInfo(id){
@@ -25,13 +27,19 @@ function MostrarOcultarModificar(id){
 function Eliminar(id){
     $("#"+id).remove();
     $("#nota"+id).remove();
-    notas.splice(id,1);
+    $("#modificar"+id).remove();
     MostrarOcultarMasInfo(id);
 }
 
 function Guardar(id){
-    
+    let titulomod= $("#titulomod").val();
+    let itemsmod= $("#itemsmod").val();
+
+
+
     MostrarOcultarModificar(id);
+
+    
 }
 
 function añadirNota(nota,i){
@@ -52,12 +60,16 @@ function añadirNota(nota,i){
         </div>
         
         <div id="modificar${i}" style="display: none">
-            <label for="titulo">Titulo:</label>
-            <input id="titulo" type="text" placeholder="${nota.titulo}">
-            <label for="items">Items:</label>
-            <input id="items" type="text" placeholder="${nota.items}">
+            <h2> Modificacion "${nota.titulo}"</h2>
+            <label for="titulomod">Titulo:</label>
             <br>
-            <button onclick="Guardar(${i})")>Guardar</button>
+            <input id="titulomod" type="text" value="${nota.titulo}">
+            <br>
+            <label for="itemsmod">Items:</label>
+            <br>
+            <textarea id="itemsmod" type="text" rows="6">${nota.items}</textarea>
+            <br>
+            <button onclick="Guardar( ${i})")>Guardar</button>
             <button onclick="MostrarOcultarModificar(${i})">Cancelar</button>
         </div>`);
 }
@@ -69,13 +81,14 @@ function nuevaNota(){
     let nota = {titulo: titulo, items: items};
 
     notas.push(nota);
-    añadirNota(nota,notas.length-1);
+    añadirNota(nota,notas.length);
 }
 
 for (let i = 0; i < notas.length; i++) {
     let nota = notas[i];
-    añadirNota(nota, i);
+    añadirNota(nota, i+1);
 }
 
 
 
+console.log(notas);
