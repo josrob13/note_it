@@ -32,14 +32,41 @@ function Eliminar(id){
 }
 
 function Guardar(id){
-    let titulomod= $("#titulomod").val();
-    let itemsmod= $("#itemsmod").val();
+    let titulomod = $("#titulomod"+id).val();
+    let itemsmod = $("#itemsmod"+id).val();
+    
+    $("#"+id).empty();
+    $("#nota"+id).empty();
+    $("#modificar"+id).empty();
 
+    $("#"+id).append(`
+        <h2>${titulomod}</h2>
+        <p>${itemsmod}</p>
+        <button onclick="Eliminar(${id})">Eliminar</button>
+        <button onclick="MostrarOcultarModificar(${id})">Modificar</button>
+        <button onclick="MostrarOcultarMasInfo(${id})">Volver</button>
+    `);
+    
+    $("#nota"+id).append(`
+        ${titulomod}
+        <button onclick="MostrarOcultarMasInfo(${id})">Más Info</button>
+    `);
 
+    $("#modificar"+id).append(`
+        <h2> Modificacion "${titulomod}"</h2>
+        <label for="titulomod${id}">Titulo:</label>
+        <br>
+        <input id="titulomod${id}" type="text" value="${titulomod}">
+        <br>
+        <label for="itemsmod${id}">Items:</label>
+        <br>
+        <textarea id="itemsmod${id}" type="text" rows="6">${itemsmod}</textarea>
+        <br>
+        <button onclick="Guardar(${id})">Guardar</button>
+        <button onclick="MostrarOcultarModificar(${id})">Cancelar</button>
+    `);
 
     MostrarOcultarModificar(id);
-
-    
 }
 
 function añadirNota(nota,i){
@@ -61,15 +88,15 @@ function añadirNota(nota,i){
         
         <div id="modificar${i}" style="display: none">
             <h2> Modificacion "${nota.titulo}"</h2>
-            <label for="titulomod">Titulo:</label>
+            <label for="titulomod${i}">Titulo:</label>
             <br>
-            <input id="titulomod" type="text" value="${nota.titulo}">
+            <input id="titulomod${i}" type="text" value="${nota.titulo}">
             <br>
-            <label for="itemsmod">Items:</label>
+            <label for="itemsmod${i}">Items:</label>
             <br>
-            <textarea id="itemsmod" type="text" rows="6">${nota.items}</textarea>
+            <textarea id="itemsmod${i}" type="text" rows="6">${nota.items}</textarea>
             <br>
-            <button onclick="Guardar( ${i})")>Guardar</button>
+            <button onclick="Guardar(${i})">Guardar</button>
             <button onclick="MostrarOcultarModificar(${i})">Cancelar</button>
         </div>`);
 }
