@@ -2,6 +2,8 @@
 <html>
     
   <head>
+    <link href="Flat-UI-master/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Flat-UI-master/dist/css/flat-ui.css">
     <link type="text/css" rel="stylesheet" href="style.css"/>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     
@@ -9,15 +11,15 @@
 
   <body>
     <div id="gestor">
-      <h2>GESTOR DE NOTAS</h2>
+      <h1>GESTOR DE NOTAS</h1>
 
       <hr>
 
-      <div id="content"></div>
+      <div id="content" class="col-md-12"></div>
 
       <div id="NoElement" style="display: block;">Sin elementos</div>
 
-      <div id="crearactualizar"><button onclick="nuevaNota()">Nueva Nota</button></div>
+      <div id="crearactualizar" style="margin: auto;"><button class="btn btn-hg btn-primary" onclick="nuevaNota()">Nueva Nota</button></div>
     </div>
 
     <div id="gestor2"></div>

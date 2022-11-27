@@ -2,3 +2,12 @@ body{
     text-align: center;
     font-size: 40px;
 }
+
+button{
+    cursor: pointer;
+}
+
+.btn-info{
+    margin-bottom: 6px;
+    margin-left: 15px;
+}

@@ -28,7 +28,7 @@ function Cancelar(id){                                      // accion del boton 
 
 function Eliminar(id){                                      // accion del boton eliminar (borra todos los divs asociados a la nota y actualiza el numero de notas que hay)
     let respuesta = window.confirm("Desea borrar la nota definitivamente?");
-    if (respuesta === true) {
+    if (respuesta == true) {
         $("#"+id).remove();
         $("#nota"+id).remove();
         $("#modificar"+id).remove();
@@ -70,9 +70,9 @@ function PasoIntermedio (id, titulomod, itemsmod) {         // crea el paso inte
             `<div id="${id}" style="display: none">
             <h2>${titulomod}</h2>
             <p>${itemsmod}</p>
-            <button onclick="Eliminar(${id})">Eliminar</button>
-            <button onclick="MostrarOcultarModificar(${id})">Modificar</button>
-            <button onclick="MostrarOcultarMasInfo(${id})">Volver</button>
+            <button class="btn btn-danger" onclick="Eliminar(${id})">Eliminar</button>
+            <button class="btn btn-primary" onclick="MostrarOcultarModificar(${id})">Modificar</button>
+            <button class="btn btn-default" onclick="MostrarOcultarMasInfo(${id})">Volver</button>
             </div>`
         );
 }
@@ -89,8 +89,8 @@ function PlantillaModificar (i) {                           // crea interfaz de 
         <br>
         <textarea id="itemsmod${i}" type="text" rows="6"></textarea>
         <br>
-        <button id="save${i}" onclick="Guardar(${i})">Guardar</button>
-        <button id="cancel${i}" onclick="Cancelar(${i})">Cancelar</button>
+        <button class="btn btn-embossed btn-primary" id="save${i}" onclick="Guardar(${i})">Guardar</button>
+        <button class="btn btn-default btn-wide" id="cancel${i}" onclick="Cancelar(${i})">Cancelar</button>
     </div>`);
 }
 
@@ -126,7 +126,7 @@ function anadirNota(nota,i){
     content.append(
         `<div id="nota${i}">
             <span>${nota.titulo}</span>
-            <button onclick="MostrarOcultarMasInfo(${i})">M&aacutes Info</button>
+            <button class="btn btn-info" onclick="MostrarOcultarMasInfo(${i})">M&aacutes Info</button>
         </div>`);
 
 }
