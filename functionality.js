@@ -67,7 +67,7 @@ function ActualizarNoElem () {                              // funcion para ir a
 
 function PasoIntermedio (id, titulomod, itemsmod) {         // crea el paso intermedio que aparecerá cuando se pulse más info
     gestor2.append(
-            `<div id="${id}" style="display: none">
+            `<div id="${id}" style="display: none; margin-top: 250px;">
             <h2>${titulomod}</h2>
             <p>${itemsmod}</p>
             <button class="btn btn-danger" onclick="Eliminar(${id})">Eliminar</button>
@@ -79,7 +79,7 @@ function PasoIntermedio (id, titulomod, itemsmod) {         // crea el paso inte
 
 function PlantillaModificar (i) {                           // crea interfaz de crear nota, boton de cancelar = borrar; boton de guardar = guarda la plantilla
     gestor2.append(
-    `<div id="modificar${i}" style="display: block">
+    `<div id="modificar${i}" style="display: block; margin-top: 150px;">
         <h2>Creaci&oacuten de nota</h2>
         <label for="titulomod${i}">Titulo:</label>
         <br>
@@ -90,7 +90,7 @@ function PlantillaModificar (i) {                           // crea interfaz de 
         <textarea id="itemsmod${i}" type="text" rows="6"></textarea>
         <br>
         <button class="btn btn-embossed btn-primary" id="save${i}" onclick="Guardar(${i})">Guardar</button>
-        <button class="btn btn-default btn-wide" id="cancel${i}" onclick="Cancelar(${i})">Cancelar</button>
+        <button class="btn btn-default" id="cancel${i}" onclick="Cancelar(${i})">Cancelar</button>
     </div>`);
 }
 

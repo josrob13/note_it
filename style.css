@@ -1,13 +1,19 @@
-body{
+body {
     text-align: center;
     font-size: 40px;
+    background-color: cornsilk;
 }
 
-button{
+button {
     cursor: pointer;
 }
 
-.btn-info{
+.btn-info {
     margin-bottom: 6px;
     margin-left: 15px;
+    background-color: #d0bdf6;
+}
+
+.btn-primary {
+    background-color: #ffda89;
 }
