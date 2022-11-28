@@ -1,32 +1,37 @@
-let notas = [                                               // notas de ejemplo
+// VARIABLES
+
+let notas = [                                               // Notas como ejemplo
     {
         titulo: "Lista de la compra",
         items: "Pan, Leche, Huevos, Queso, etc"
     },
     {
         titulo: "Lista de tareas",
-        items: "Limpiar, Barrer, Fregar, etc"
+        items: "Limpiar, Estudiar, Entrenar, etc"
     }
 ];
 
 let gestor= $("#gestor");
-let content = $("#content");                                // variables varias para controlar el contenido del html
+let content = $("#content");                                // Variables para simplificar el código
 let gestor2= $("#gestor2");
 
-let num_divs = $("#gestor #content div").length;            // variables para contar el numero de notas creadas
+let num_divs = $("#gestor #content div").length;            // Variables para contar el número de elementos
 let no_elem = $("#NoElement");
+//---------------------------------------------------------------------------------------------------------------------
 
-function MostrarOcultarMasInfo(id){                         // accion del boton mas info
+//FUNCIONES
+
+function MostrarOcultarMasInfo(id){                         // Muestra o oculta el gestor principal
     gestor.toggle();
     $("#"+id).toggle();
 }
 
-function Cancelar(id){                                      // accion del boton cancelar (borra el menu creado)
+function Cancelar(id){                                      // Borra la nota que se iba a modificar y muestra el gestor
     $("#modificar"+id).remove();
     gestor.toggle();
 }
 
-function Eliminar(id){                                      // accion del boton eliminar (borra todos los divs asociados a la nota y actualiza el numero de notas que hay)
+function Eliminar(id){                                      // Si el usuario acepta la alerta se borra la nota seleccionada y se actualiza el número de elementos
     let respuesta = window.confirm("Desea borrar la nota definitivamente?");
     if (respuesta == true) {
         $("#"+id).remove();
@@ -37,24 +42,23 @@ function Eliminar(id){                                      // accion del boton 
     ActualizarNoElem ();
 }
 
-function Volver(id){                                        // accion del boton volver (esconde el menu modificar y enseña el paso intermedio)
+function Volver(id){                                        // Vuelve a mostrar los elementos de la nota seleccionada
     $("#modificar"+id).hide();
     $("#"+id).show();
 }
 
-function MostrarOcultarModificar(id){                       // accion del boton modificar (modifica la plantilla ya creada por nueva nota para que sea una modificacion)
-    $("#"+id).toggle();                                     // esconde el paso intermedio
+function MostrarOcultarModificar(id){                       // Muestra o oculta la modificación de la nota
     let custom = $("#modificar"+id+" h2");
     custom.html(`Modificaci&oacuten de "${notas[id].titulo}"`);
     $("#titulomod"+id).attr("value", notas[id].titulo);
     $("#itemsmod"+id).attr("value", notas[id].items);
     $("#cancel"+id).attr("onclick", "Volver("+id+")");
     $("#cancel"+id).html("Cancelar");
-    
-    $("#modificar"+id).toggle();                            // y muestra la plantilla
+
+    $("#modificar"+id).toggle();                         
 }
 
-function ActualizarNoElem () {                              // funcion para ir actualizando el numero de notas creadas y el NoElement
+function ActualizarNoElem () {                              // Muestra o oculta "Sin elementos", dependiendo del número de elementos
     num_divs = $("#gestor #content div").length;
     no_elem = $("#NoElement");
 
@@ -65,21 +69,21 @@ function ActualizarNoElem () {                              // funcion para ir a
     }
 }
 
-function PasoIntermedio (id, titulomod, itemsmod) {         // crea el paso intermedio que aparecerá cuando se pulse más info
+function PasoIntermedio (id, titulomod, itemsmod) {         // Crea el código HTML de la nota nueva
     gestor2.append(
-            `<div id="${id}" style="display: none; margin-top: 250px;">
-            <h2>${titulomod}</h2>
-            <p>${itemsmod}</p>
-            <button class="btn btn-danger" onclick="Eliminar(${id})">Eliminar</button>
-            <button class="btn btn-primary" onclick="MostrarOcultarModificar(${id})">Modificar</button>
-            <button class="btn btn-default" onclick="MostrarOcultarMasInfo(${id})">Volver</button>
-            </div>`
-        );
+        `<div id="${id}" style="display: none; margin-top: 250px;">
+        <h2>${titulomod}</h2>
+        <p>${itemsmod}</p>
+        <button class="btn btn-danger" onclick="Eliminar(${id})">Eliminar</button>
+        <button class="btn btn-primary" onclick="MostrarOcultarModificar(${id})">Modificar</button>
+        <button class="btn btn-default" onclick="MostrarOcultarMasInfo(${id})">Volver</button>
+        </div>`
+    );
 }
 
-function PlantillaModificar (i) {                           // crea interfaz de crear nota, boton de cancelar = borrar; boton de guardar = guarda la plantilla
+function PlantillaModificar (i) {                           // Crea el código HTML para modificar la nota nueva
     gestor2.append(
-    `<div id="modificar${i}" style="display: block; margin-top: 150px;">
+        `<div id="modificar${i}" style="display: block; margin-top: 150px;">
         <h2>Creaci&oacuten de nota</h2>
         <label for="titulomod${i}">Titulo:</label>
         <br>
@@ -97,17 +101,13 @@ function PlantillaModificar (i) {                           // crea interfaz de 
 function Guardar(id){
     let titulomod = $("#titulomod"+id).val();
     let itemsmod = $("#itemsmod"+id).val();
-    let nota = {titulo: titulomod, items: itemsmod};        // recoge la informacion de los inputs
+    let nota = {titulo: titulomod, items: itemsmod};        // Recoge la información de los inputs del HTML y crea la nota
 
-    console.log(id);
-
-    if (id > notas.length-1){                               // si id > longitud de nota, es decir, si es una nueva nota, crea el menu necesario
-        anadirNota(nota, id);                               // añade la nota a la lista del menu principal
-
-        notas.push(nota);                                   // añade la nota al array de notas
-    
+    if (id > notas.length-1){                               
+        notas.push(nota);                                   // Añade la nota al array "notas"
         PasoIntermedio(id, titulomod, itemsmod);
-    }else {                                                 // si no, solo actualiza los valores
+        
+    } else {                                                 // Si no se cumple la condicion, actualiza los valores
         notas[id].titulo = titulomod;
         notas[id].items = itemsmod;
         $("#nota"+id+" span").html(titulomod)
@@ -115,31 +115,29 @@ function Guardar(id){
         $("#"+id+" p").html(itemsmod);
     }
 
-    ActualizarNoElem ();                                    // actualiza el NoElement
+    ActualizarNoElem ();                                   
 
-    $("#modificar"+id).hide();                              // vuelve al menu principal escondiendo la plantilla de la creacion y mostrando el gestor principal
+    $("#modificar"+id).hide();                              // Muestra el gestor principal
     gestor.toggle();
 }
 
-function anadirNota(nota,i){
-
+function anadirNota(nota,i){                                // Crea el códgio HTML de la nota creada en el gestor principal
     content.append(
         `<div id="nota${i}">
             <span>${nota.titulo}</span>
             <button class="btn btn-info" onclick="MostrarOcultarMasInfo(${i})">M&aacutes Info</button>
         </div>`);
-
 }
 
-function nuevaNota(){                                       // primer paso al pulsar el boton de nuevo elemento
-
-    let i = notas.length;
+function nuevaNota(){                                       // Muestra la creación de la nota y la añade al listado
+    let j = notas.length;
     gestor.toggle();
-    PlantillaModificar(i);
-        
+    PlantillaModificar(j);       
 }
+//------------------------------------------------------------------------------------------------------------------------------
+// MAIN
 
-for (let i = 0; i < notas.length; i++) {                    // muestra las notas de ejemplo
+for (let i = 0; i < notas.length; i++) {                    // Carga el array "notas" en la página web
     let nota = notas[i];
     anadirNota(nota, i);
 
@@ -153,7 +151,5 @@ for (let i = 0; i < notas.length; i++) {                    // muestra las notas
     PasoIntermedio(i, nota.titulo, nota.items);
 }
 
-ActualizarNoElem ();                                        // actualiza el NoElement para las notas de ejemplo
-
-console.log(num_divs);
-console.log(notas);
+ActualizarNoElem ();                                        // Actualiza el número de elementos por si acaso es necesario mostrar "Sin Elementos"
+//--------------------------------------------------------------------------------------------------------------------------------
