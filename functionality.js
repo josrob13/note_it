@@ -1,37 +1,34 @@
-// VARIABLES
-
-let notas = [                                               // Notas como ejemplo
+let notas = [                                               // Notas de ejemplo
     {
         titulo: "Lista de la compra",
-        items: "Pan, Leche, Huevos, Queso, etc"
+        items: [" Pan", " Leche", " Huevos", " Queso", " etc"]
     },
     {
         titulo: "Lista de tareas",
-        items: "Limpiar, Estudiar, Entrenar, etc"
+        items: [" Limpiar", " Estudiar", " Entrenar", " etc"]
     }
 ];
 
 let gestor= $("#gestor");
-let content = $("#content");                                // Variables para simplificar el código
+let content = $("#content");                                // Variables varias para controlar el contenido del html
 let gestor2= $("#gestor2");
 
-let num_divs = $("#gestor #content div").length;            // Variables para contar el número de elementos
+let num_divs = $("#gestor #content div").length;            // Variables para contar el numero de notas creadas
 let no_elem = $("#NoElement");
-//---------------------------------------------------------------------------------------------------------------------
 
-//FUNCIONES
-
-function MostrarOcultarMasInfo(id){                         // Muestra o oculta el gestor principal
+function MostrarOcultarMasInfo(id){                         // Accion del boton mas info (esconde el gestor1 y muestra la info)
     gestor.toggle();
     $("#"+id).toggle();
 }
 
-function Cancelar(id){                                      // Borra la nota que se iba a modificar y muestra el gestor
+function Cancelar(id){                                      // Accion del boton cancelar (borra el menu creado y todo lo relacionado con la nota)
     $("#modificar"+id).remove();
+    $("#"+id).remove();
+    $("#nota"+id).remove();
     gestor.toggle();
 }
 
-function Eliminar(id){                                      // Si el usuario acepta la alerta se borra la nota seleccionada y se actualiza el número de elementos
+function Eliminar(id){                                      // Accion del boton eliminar (borra todos los divs asociados a la nota y actualiza el numero de notas que hay)
     let respuesta = window.confirm("Desea borrar la nota definitivamente?");
     if (respuesta == true) {
         $("#"+id).remove();
@@ -42,23 +39,46 @@ function Eliminar(id){                                      // Si el usuario ace
     ActualizarNoElem ();
 }
 
-function Volver(id){                                        // Vuelve a mostrar los elementos de la nota seleccionada
+function EliminarSub(id, i){                                // Accion del boton eliminar subelemento (si confirma se borra el apartado del input y se deja como undefined en el array)
+
+    let respuesta = window.confirm("Desea borrar el apartado definitivamente?");
+    if (respuesta == true) {
+        $("#inputs"+i).remove();
+        notas[id].items.slice(i, 1);
+    }
+}
+
+function Volver(id){                                        // Accion del boton volver (esconde el menu modificar y enseña el paso intermedio)
     $("#modificar"+id).hide();
     $("#"+id).show();
 }
 
-function MostrarOcultarModificar(id){                       // Muestra o oculta la modificación de la nota
+function Subelementos (id){                                 // Funcion que borra el menu y mete con append los distintos items en distintos inputs (para actualizarlo con nuevos valores)
+    $("#itemsmod"+id).empty();
+    for (let i = 0; i < notas[id].items.length; i++) {
+        if (notas[id].items[i] != undefined) {
+            $("#itemsmod"+id).append(
+                `<div class="flex" id="inputs${i}">
+                <input style="margin-left:435px" class="form-control flat" id="item${i}" type="text" value="${notas[id].items[i]}">
+                <button id="elim${i}" onclick="EliminarSub(${id},${i})" style="margin-right:410px" class="btn btn-g btn-danger">B</button>
+                </div>`);
+        }
+    }
+}
+
+function MostrarOcultarModificar(id){                       // Accion del boton modificar (modifica la plantilla ya creada por nueva nota para que sea una modificacion)
+    $("#"+id).toggle();                                     // Esconde el paso intermedio
     let custom = $("#modificar"+id+" h2");
     custom.html(`Modificaci&oacuten de "${notas[id].titulo}"`);
     $("#titulomod"+id).attr("value", notas[id].titulo);
-    $("#itemsmod"+id).attr("value", notas[id].items);
+    Subelementos(id);                                       // Actualiza los subelementos
     $("#cancel"+id).attr("onclick", "Volver("+id+")");
     $("#cancel"+id).html("Cancelar");
-
-    $("#modificar"+id).toggle();                         
+    
+    $("#modificar"+id).toggle();                            // Muestra la plantilla
 }
 
-function ActualizarNoElem () {                              // Muestra o oculta "Sin elementos", dependiendo del número de elementos
+function ActualizarNoElem () {                              // Funcion para ir actualizando el numero de notas creadas y el NoElement
     num_divs = $("#gestor #content div").length;
     no_elem = $("#NoElement");
 
@@ -69,45 +89,85 @@ function ActualizarNoElem () {                              // Muestra o oculta 
     }
 }
 
-function PasoIntermedio (id, titulomod, itemsmod) {         // Crea el código HTML de la nota nueva
+function PasoIntermedio (id, titulomod, itemsmod) {         // Crea el paso intermedio que aparecerá cuando se pulse más info
     gestor2.append(
-        `<div id="${id}" style="display: none; margin-top: 250px;">
-        <h2>${titulomod}</h2>
-        <p>${itemsmod}</p>
-        <button class="btn btn-danger" onclick="Eliminar(${id})">Eliminar</button>
-        <button class="btn btn-primary" onclick="MostrarOcultarModificar(${id})">Modificar</button>
-        <button class="btn btn-default" onclick="MostrarOcultarMasInfo(${id})">Volver</button>
-        </div>`
-    );
+            `<div id="${id}" style="display: none; margin-top: 250px;">
+            <h2>${titulomod}</h2>
+            <p>${itemsmod}</p>
+            <button class="btn btn-danger" onclick="Eliminar(${id})">Eliminar</button>
+            <button class="btn btn-primary" onclick="MostrarOcultarModificar(${id})">Modificar</button>
+            <button class="btn btn-default" onclick="MostrarOcultarMasInfo(${id})">Volver</button>
+            </div>`
+        );
 }
 
-function PlantillaModificar (i) {                           // Crea el código HTML para modificar la nota nueva
+function PlantillaModificar (i) {                           // Crea interfaz de crear nota, boton de cancelar = borrar; boton de guardar = guarda la plantilla
     gestor2.append(
-        `<div id="modificar${i}" style="display: block; margin-top: 150px;">
+    `<div id="modificar${i}" style="display: block">
         <h2>Creaci&oacuten de nota</h2>
         <label for="titulomod${i}">Titulo:</label>
         <br>
-        <input id="titulomod${i}" type="text">
-        <br>
+        <input class="form-control flat" id="titulomod${i}" type="text">
+        
         <label for="itemsmod${i}">Items:</label>
         <br>
-        <textarea id="itemsmod${i}" type="text" rows="6"></textarea>
-        <br>
+        <div class="container" id="itemsmod${i}">
+        </div>
+
+        <div class="container">
+            <button onclick="AnadirSubelemento(${i})" class="btn btn-md btn-success">+</button>
+        </div>
+
         <button class="btn btn-embossed btn-primary" id="save${i}" onclick="Guardar(${i})">Guardar</button>
         <button class="btn btn-default" id="cancel${i}" onclick="Cancelar(${i})">Cancelar</button>
     </div>`);
 }
 
-function Guardar(id){
-    let titulomod = $("#titulomod"+id).val();
-    let itemsmod = $("#itemsmod"+id).val();
-    let nota = {titulo: titulomod, items: itemsmod};        // Recoge la información de los inputs del HTML y crea la nota
+function AnadirSubelemento (id) {                           // Funcion para añadir subelemento a la nota, actualizando los valores si la nota ya esta creada o creandola si no se ha creado aun
+    $("#itemsmod"+id).append(
+            `<div class="flex" id="inputs">
+            <input style="margin-left:435px" class="form-control flat" id="item" type="text" value="">
+            <button id="elim" onclick="EliminarSub(${id})" style="margin-right:410px" class="btn btn-g btn-danger">B</button>
+            </div>`);
+    
+    if (notas[id] != undefined) {
+        $("#itemsmod"+id+" #item").attr("id", "item"+notas[id].items.length);
+        $("#itemsmod"+id+" #inputs").attr("id", "inputs"+notas[id].items.length);
+        $("#itemsmod"+id+" #elim").attr("id", "elim"+notas[id].items.length);
+        $("#itemsmod"+id+" #elim"+notas[id].items.length).attr("onclick", "EliminarSub("+id+","+notas[id].items.length+")");
+        notas[id].items.push($("#item"+notas[id].items.length).val());
+    }else {
+        notas.push({titulo: $("#titulomod"+id).val(), items: [$("#item").val()]});
+        $("#itemsmod"+id+" #item").attr("id", "item0");
+        $("#itemsmod"+id+" #inputs").attr("id", "inputs0");
+        $("#itemsmod"+id+" #elim").attr("id", "elim0");
+        $("#itemsmod"+id+" #elim0").attr("onclick", "EliminarSub("+id+",0)");
+        PasoIntermedio(id, $("#titulomod"+id).val(), notas[id].items);
+        anadirNota(notas[id], id);
+    }
+}
 
-    if (id > notas.length-1){                               
-        notas.push(nota);                                   // Añade la nota al array "notas"
-        PasoIntermedio(id, titulomod, itemsmod);
-        
-    } else {                                                 // Si no se cumple la condicion, actualiza los valores
+function Guardar(id){                                       // Funcion para guardar la nota creada
+    let titulomod = $("#titulomod"+id).val();
+    let itemsmod = [];
+
+    if (notas[id] !== undefined) {
+        for (let i = 0; i < notas[id].items.length; i++) {
+            itemsmod.push($("#item"+i).val());
+        }
+    }
+
+    let nota = {titulo: titulomod, items: itemsmod};        // Recoge la informacion de los inputs
+
+    if (id > notas.length-1){                               // Si id > longitud de nota - 1, es decir, si es una nueva nota, crea el menu necesario
+
+        if (notas[id] == undefined) {
+            anadirNota(nota, id);                           // Añade la nota a la lista del menu principal
+            notas.push(nota);                               // Añade la nota al array de notas
+            PasoIntermedio(id, titulomod, itemsmod);
+        }
+    
+    }else {                                                 // Si no, solo actualiza los valores
         notas[id].titulo = titulomod;
         notas[id].items = itemsmod;
         $("#nota"+id+" span").html(titulomod)
@@ -115,29 +175,31 @@ function Guardar(id){
         $("#"+id+" p").html(itemsmod);
     }
 
-    ActualizarNoElem ();                                   
+    ActualizarNoElem ();                                    // Actualiza el NoElement
 
-    $("#modificar"+id).hide();                              // Muestra el gestor principal
+    $("#modificar"+id).hide();                              // Vuelve al menu principal escondiendo la plantilla de la creacion y mostrando el gestor principal
     gestor.toggle();
 }
 
-function anadirNota(nota,i){                                // Crea el códgio HTML de la nota creada en el gestor principal
+function anadirNota(nota,i){                                // Funcion que añade la nota al menu principal
+
     content.append(
         `<div id="nota${i}">
             <span>${nota.titulo}</span>
             <button class="btn btn-info" onclick="MostrarOcultarMasInfo(${i})">M&aacutes Info</button>
         </div>`);
+
 }
 
-function nuevaNota(){                                       // Muestra la creación de la nota y la añade al listado
-    let j = notas.length;
+function nuevaNota(){                                       // Primer paso al pulsar el boton de nuevo elemento
+
+    let i = notas.length;
     gestor.toggle();
-    PlantillaModificar(j);       
+    PlantillaModificar(i);
+        
 }
-//------------------------------------------------------------------------------------------------------------------------------
-// MAIN
 
-for (let i = 0; i < notas.length; i++) {                    // Carga el array "notas" en la página web
+for (let i = 0; i < notas.length; i++) {                    // Muestra las notas de ejemplo
     let nota = notas[i];
     anadirNota(nota, i);
 
@@ -145,11 +207,9 @@ for (let i = 0; i < notas.length; i++) {                    // Carga el array "n
     $("#modificar"+i).hide();
     $("#modificar"+i+" h2").html("Modificacion de "+nota.titulo+"");
     $("#titulomod"+i).attr("value", nota.titulo);
-    $("#itemsmod"+i).html(nota.items);
     $("#cancel"+i).attr("onclick", `MostrarOcultarMasInfo${i}`);
     $("#cancel"+i).html("Volver");
     PasoIntermedio(i, nota.titulo, nota.items);
 }
 
-ActualizarNoElem ();                                        // Actualiza el número de elementos por si acaso es necesario mostrar "Sin Elementos"
-//--------------------------------------------------------------------------------------------------------------------------------
+ActualizarNoElem ();                                        // Actualiza el NoElement para las notas de ejemplo
