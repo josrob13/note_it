@@ -1,0 +1,12 @@
+<html>
+<body>
+	<p>Title: {{note.title}}</p>
+	<p>Items: {{note.items}}</p>
+	
+	<a href="/note/{{note.id}}/delete" onclick="return confirm('This note will be removed. Are you sure you wish to continue?')"><button>Delete note</button></a>
+	<a href=""><button>Modify note</button></a>
+	<br>
+	
+	<a href="/"><button>Back</button></a>
+</body>
+</html>

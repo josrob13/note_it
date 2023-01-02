@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <script src="app.js"></script>
+</head>
+
+<body>
+	<h1>Notes</h1>
+	
+	<a href="new_note.html"><button>New Note</button></a>
+	
+	<div id='notes'>
+		<br>
+		{{#notes}}
+		<a>{{title}}</a>
+		<a href="note/{{id}}"><button>View Note</button></a>
+		<br>
+		<br>
+		{{/notes}}
+	</div>
+	
+	{{^notes}}
+	<p>No notes yet.</p>
+	{{/notes}}
+	
+	<button onclick='loadMore()'>Load more</button>
+
+	
+</body>
+</html>
