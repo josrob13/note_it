@@ -5,13 +5,16 @@
     <link type="text/css" rel="stylesheet" href="/style.css"/>
 </head>
 <body>
-	<h2>Title: {{title}}</h2>
-	<p><h2>Items: <h2>{{#items}} <p> {{item}} </p> {{/items}}</p>
+	<h2>Title:</h2>
+	<p>{{title}}</p>
+	<p><h2>Items:</h2>
+	
+	{{#items}} 
+	<p> {{item}} </p> 
+	{{/items}}</p>
 	
 	<a href="/note/{{id}}/delete" onclick="return confirm('This note will be removed. Are you sure you wish to continue?')"><button class="btn btn-danger">Delete note</button></a>
 	<a href="/note/{{id}}/modify"><button class="btn btn-primary">Modify note</button></a>
-	<br>
-	
 	<a href="/"><button class="btn btn-default">Back</button></a>
 </body>
 </html>

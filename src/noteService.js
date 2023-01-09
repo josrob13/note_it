@@ -3,13 +3,13 @@ export let nextId = 0;
 
 //                      FUNCIONES PARA LAS NOTAS
 
-export function addNote(note) {
+export function addNote(note) {                             //funcion para añadir la nota al mapa junto con el id
     let id = nextId++;
     note.id = id.toString();
     notes.set(note.id, note);
 }
 
-export function getNotes(from, to) {
+export function getNotes(from, to) {                        //funcion para devolver las notas desde dos parámetros(from y to)
     let values = [...notes.values()];
     if (from !== undefined) {
         return values.slice(from, to);
@@ -18,65 +18,31 @@ export function getNotes(from, to) {
     }
 }
 
-export function updateNote(id, title, items) {
+export function updateNote(id, title, items) {             //funcion para actualizar la nota pasando por parámetro el id
     notes.get(id).title = title;
     notes.get(id).items = items;
 }
 
-export function deleteNote(id){
+export function deleteNote(id){                            //funcion para borrar la nota pasando por parámetro el id
     notes.delete(id);
 }
 
-export function getNote(id){
-    //console.log(notes);
+export function getNote(id){                                //funcion para devolver la nota pasando por parámetro el id
+
     let nota_id = notes.get(id);
-    //console.log(nota_id);
     let itemsarray = new Array();
     let noteitems = [...nota_id.items];
-    //console.log(noteitems);
+
     for (let index = 0; index < noteitems.length; index++) {
         itemsarray[index] = {item:noteitems[index][1]};
     }
     return {title: nota_id.title, items: itemsarray, id:id}
 }
 
-//                          FUNCIONES PARA LOS ITEMS
-/*
-export function addItem(item, note_id) {
-    let id = nextItemId++;
-    item.id = id.toString();
-    notes.get(note_id).items.set(id, item);
-}
-
-export function getItems(from, to, note_id) {
-    let values = [...notes.get(note_id).items.values()];
-    if (from !== undefined) {
-        return values.slice(from, to);
-    } else {
-        return values;
-    }
-}
-
-export function deleteItem(id, note_id){
-    notes[note_id].items.delete(id);
-}
-
-export function getItem(id, note_id){
-    return notes[note_id].items.get(id);
-}
-
-export function getItemValues (note_id) {
-    let values_items = Object.keys(notes[note_id].items).map(function(key){
-        return items[key];
-    });
-    return values_items;
-}
-*/
 //                          FUNCION PARA CARGAR LAS NOTAS INICIALES
 
 export function loadSampleData() {
 
-    //addNote({title: "Weekly grocery list", items: "Rice, Beans, Meat, Vegetables, Fruit"});
     addNote({title: "Weekly grocery list", items: new Map([[0,"Rice"],[1,"Beans"],[2,"Meat"],[3,"Vegetables"],[4,"Fruit"]])});
     addNote({title: "Pending tasks", items: new Map([[0,"Call insurance company"],[1,"Email office"],[2,"Book flight for vacation"]])});
     addNote({title: "Weekend shopping list", items: new Map([[0,"Beer"],[1,"Pizza"],[2,"Popcorn"],[3,"DVD movies"]])});
@@ -92,11 +58,6 @@ export function loadSampleData() {
     addNote({title: "Gift ideas for Christmas", items: new Map([[0,"A scarf for my mom"],[1,"A book for my dad"],[2,"A puzzle for my sister"]])});
     addNote({title: "Home improvement projects", items: new Map([[0,"Paint living room"],[1,"Fix leaking faucet"],[2,"Install new light fixtures"]])});
     addNote({title: "Upcoming appointments", items: new Map([[0,"Dentist on Monday at 10am"],[1,"Haircut on Wednesday at 2pm"],[2,"Doctor on Friday at 9am"]])});
-    addNote({title: "Bucket list", items: new Map([[0,"Skydiving"],[1,"Visit all seven continents"],[2,"Learn a new language"]])});
-    addNote({title: "Wedding to-do list", items: new Map([[0,"Book venue"],[1,"Choose wedding party"],[2,"Order invitations"]])});
-    addNote({title: "Financial goals", items: new Map([[0,"Save for a down payment on a house"],[1,"Pay off credit card debt"],[2,"Start a retirement fund"]])});
-    addNote({title: "Travel packing list", items: new Map([[0,"Passport"],[1,"Clothes"],[2,"Toiletries"],[3,"Medications"]])});
-    addNote({title: "Spring cleaning tasks", items: new Map([[0,"Declutter closets"],[1,"Wash windows"],[2,"Deep clean carpets"]])});
 }
 
 loadSampleData();

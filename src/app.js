@@ -17,3 +17,5 @@ app.use(express.static(__dirname + '/../public'));
 app.use('/', noteRouter);
 
 app.listen(3000, () => console.log('Listening on port 3000!'));
+
+//configuracion de las rutas

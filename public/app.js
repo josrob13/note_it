@@ -2,7 +2,7 @@ const NUM = 5;
 
 let loadMoreRequests = 1;
 
-id = 1;
+let id = 1;
 
 
 async function loadMore(){                              // funcion para cargar mas elementos de 5 en 5
@@ -21,13 +21,11 @@ async function loadMore(){                              // funcion para cargar m
     loadMoreRequests++;
 }
 
-function CargarInputs(){                                // funcion para cargar inputs
+function CargarInputs(){                                // funcion para cargar inputs y añadir los items a la nota
     $('#items').append(`
-    
 			<div id="${id}" class="flex">
-                <input style="margin-left:800px" type="text" name="item" class="form-control flat"> <button style="margin-right:800px;" class="btn btn-danger type="button" onclick="BorrarInput(${id})">🗑️</button> <br><br>
+                <input style="margin-left:auto" type="text" name="item" class="form-control flat"> 
             </div>
-    
             `);
     id = id + 1;
 }
@@ -41,4 +39,4 @@ function BorrarInput(id){                                   // funcion para borr
 
 function getKeyByValue(object, value) {                     // funcion para conseguir la llave correspondiente a un valor
     return Object.keys(object).find(key => object[key] === value);
-  }
+}
