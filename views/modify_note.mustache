@@ -1,19 +1,19 @@
 <html>
 <head>
-    <link href="Flat-UI-master/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="Flat-UI-master/dist/css/flat-ui.css">
+    <link href="/Flat-UI-master/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/Flat-UI-master/dist/css/flat-ui.css">
     <link type="text/css" rel="stylesheet" href="/style.css"/>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 </head>
 <body>
 	<form action="modify" method="post" id="formulario2">
-		<p>Title </p>
+		<h2>Title </h2>
 		<input type='text' class="form-control flat" name='title' value="{{title}}">
-		<p>Items:</p>
+		<h2>Items:</h2>
 		<div id="items">
 		{{#items}}
 			<div id="{{id}}" class="container">
-            	 <input type="text" class="form-control flat" name="item" value="{{item}}"> <button type="button" class="btn btn-danger" onclick="BorrarInput(id)">🗑️</button> <br><br>
+            	 <input type="text" class="form-control flat" name="item" value="{{item}}"> <br><br>
 			</div>
 		{{/items}}
 		</div>
