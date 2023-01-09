@@ -2,18 +2,21 @@
 
 <head>
     <script src="app.js"></script>
+    <link href="Flat-UI-master/dist/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Flat-UI-master/dist/css/flat-ui.css">
+    <link type="text/css" rel="stylesheet" href="style.css"/>
 </head>
 
 <body>
 	<h1>Notes</h1>
 	
-	<a href="new_note.html"><button>New Note</button></a>
+	<a href="new_note.html"><button class="btn btn-primary">New Note</button></a>
 	
 	<div id='notes'>
 		<br>
 		{{#notes}}
 		<a>{{title}}</a>
-		<a href="note/{{id}}"><button>View Note</button></a>
+		<a href="note/{{id}}"><button class="btn btn-info">View Note</button></a>
 		<br>
 		<br>
 		{{/notes}}
@@ -23,7 +26,7 @@
 	<p>No notes yet.</p>
 	{{/notes}}
 	
-	<button onclick='loadMore()'>Load more</button>
+	<button class="btn btn-success" onclick='loadMore()'>Load more</button>
 
 	
 </body>
